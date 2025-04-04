@@ -1,40 +1,44 @@
 # Lab: File Path Traversal Simple Case
 
-I started off with reading through the content of the lab on Port Swigger's Web Security Academy and navigated to the lab URL.
+I started by reading through the content of the lab on PortSwigger's Web Security Academy and navigating to the lab URL.
 
-File Path Traversal is one of low hanging fruits attack vectors which is easy to look for in a web application penetration testing. The core idea is that an insecure website will allow outsiders who are not the dev team to have access to the data of the system that they should not be able to access.
+File Path Traversal is one of the easiest attack vectors to identify in web application penetration testing. The core idea is that an insecure website allows unauthorized users to access sensitive system data that should be restricted.
 
-The way to check it is simple. Manually typing `../../../etc/passwd` is usually do the trick. The `../../../` tells the linux server to travel back 3 directories to be in the `/` directory. For a Windows server, `\` is often used.
+The basic method to test for this vulnerability is simple: manually entering `../../../etc/passwd` often does the trick. The `../../../` instructs the Linux server to move up three directories to reach the root (`/`). On a Windows server, `\` is typically used instead.
 
-The `/etc/passwd` after that tells the server that after reaching the `/`, travel to `/etc` directory, look for the filename `passwd`, and shows the result.
+After reaching `/`, the `/etc/passwd` path directs the server to the `/etc` directory, retrieves the passwd file, and displays its content.
 
-Here comes the important things, you can't just add `../../../etc/passwd`anywhere in the website and expect it will work right away. The trick is to only use this method at a file on the website. I used to understand about the `../../../etc/passwd`, but not know where to put it. Now I understand that.
+## Identifying the Correct Injection Point
 
-Let's pay attention to the lab website. I tried to add it to the lab's url and it did not work. I navigated to one of the displayed items and tried to add that into the URL and it did not work.
+However, you can’t just add `../../../etc/passwd` anywhere on a website and expect it to work. It only works when injected into a request that interacts with files.
 
-The screenshot below shows that I am in the displayed an item area. While you think this is the right place to add the `../../../etc/passwd` because it shows a file, it is not the correct place to add it.
+Previously, I understood how path traversal works but didn’t know where to apply it. Now, I understand that it needs to be inserted into a request that references a file.
 
-![FileTransversal-1](Images/PortSwiggerFileTransversal-1.png)
+On the lab website, I first tried appending it to the URL directly, but it didn’t work. Then, I navigated to a displayed item and inserted it into the URL, but that also failed.
 
-The below screenshot is the correct place to add it. I reached this by right click on the displayed image and clicked open image in a new tab.
+At first glance, it seemed logical to inject `../../../etc/` passwd where an item was displayed, but this was incorrect.
 
-As you can see, the red rectangular box in the image shows the filename.jpg.
+![incorrectPlaceToCheck](Images/PortSwiggerFileTransversal-1.png)
 
-![FileTransversal-2](Images/PortSwiggerFileTransversal-2.png)
+The correct injection point was found by right-clicking on an image and selecting "Open image in a new tab." The red box in the screenshot highlights the filename in the URL. Once you see a filename, that is the place to check for **Path Traversal**.
 
-To make this work, open Burp Suite and capture the traffic. The screenshot below shows the unmodified traffic captured by Burp Suite. The red box shows the location of the thing traffic that needs to be modified.
+![correctPlaceToCheck](Images/PortSwiggerFileTransversal-2.png)
 
-I used to see old walkthroughs in a CTF such as TryHackMe and HackTheBox made some change to the path directly on the web browser, but that is no longer applicable to the newer web browser versions. However, you can still modify it using Burp Suite.
+## Exploiting the Vulnerability
 
-![FileTransversal-3](Images/PortSwiggerFileTransversal-3.png)
+To make this work, I used Burp Suite to capture the HTTP request. The screenshot below shows the original request before modification, with the key part of the request highlighted.
 
-Here is after I modify and send it. I prefer to send from the repeater in case I screw up I can re-send it again.
+In older CTFs like TryHackMe and HackTheBox, path traversal payloads were sometimes tested directly in the browser’s address bar. However, modern web browsers have stricter security measures that prevent this. Instead, you can modify the request using Burp Suite
 
-![FileTransversal-4](Images/PortSwiggerFileTransversal-4.png)
+![unmodifiedRequestInBurp](Images/PortSwiggerFileTransversal-3.png)
+
+After modifying the request in Burp Suite, I sent it using the Repeater tool. I prefer using Repeater because if I make a mistake, I can easily resend the request without capturing new traffic.
+
+![success](Images/PortSwiggerFileTransversal-4.png)
 
 As you can see, I was able to make the system reveals the content inside `/etc/passwd` which contains user account information such as usernames, user IDs, and home directories.
 
-However, this file does not store passwords. In modern Linux systems, passwords hashes are stored separately in `/etc/shadows`, which requires higher privileges to access.
+The /etc/passwd file contains user account information, such as usernames, user IDs, and home directories. However, it does not store passwords. In modern Linux systems, password hashes are stored separately in /etc/shadow, which requires higher privileges to access.
 
 ## Mitigation
 
