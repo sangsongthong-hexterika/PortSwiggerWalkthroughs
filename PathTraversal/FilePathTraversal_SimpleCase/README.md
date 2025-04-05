@@ -42,6 +42,14 @@ The /etc/passwd file contains user account information, such as usernames, user 
 
 ## Mitigation
 
-Coming soon!
++ Validate user input with the whitelist. If that cannot be done, then, at least restrict it to alphanumeric input.
 
-**Reference:** [Port Swigger File Path Traversal](https://portswigger.net/web-security/file-path-traversal)
++ Use secure functions and libraries: Use built-in functions that handle file paths safely, like Python's `os.path.join()` or `pathlib`, to avoid manual path concatenation.
+
++ Set strict base directories (jail the path): Make sure file access is limited to a specific directory (e.g., `/home/app/files`) and prevent navigation outside it by resolving the absolute path and checking if it stays inside the allowed directory.
+
++ Normalize and validate paths: Use `os.path.abspath()` or `os.path.realpath()` to get the true path, then verify it doesn't escape the allowed directory.
+
++ Avoid dynamic file access if not necessary: If you don’t need user-specified filenames, don't allow them. Use internal mappings or static filenames.
+
++ Use least privilege permissions: The program should only have access to directories and files it really needs, using the principle of least privilege.
