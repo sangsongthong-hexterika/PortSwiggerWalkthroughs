@@ -2,7 +2,7 @@
 
 This lab is very short and easy to test. It is considered as a low hanging fruit.
 
-I started off by navigating to the lab. The general idea is to check the `robots.txt` to see if site shows any information that it shouldn't. 
+I started off by navigating to the lab. The general idea is to check the `robots.txt` to see if site shows any information that it shouldn't.
 
 I can do that by manually adding `robots.txt` at the end of the website's URL in the URL bar in the web browser as you can see in the screenshot below.
 

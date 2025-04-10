@@ -49,7 +49,6 @@ Now you have solved the lab. Carlos is being deleted from the system.
 
 ![successfullyDeleteCarlos](Images/PortSwiggerAccessControl-lab2-6.png)
 
-
 ## Mitigation
 
 + Use other method to secure admin's panel.
