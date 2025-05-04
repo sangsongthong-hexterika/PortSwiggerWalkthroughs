@@ -45,3 +45,5 @@ Upon capturing the request, I had to change the ***Admin=false*** to ***Admin=tr
 As you can see, this lab is solved.
 
 ![LabSolved](Images/AccessControlLab4_13_LabSolved.png)
+
+## Mitigations Strategies
