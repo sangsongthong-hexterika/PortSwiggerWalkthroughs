@@ -49,3 +49,19 @@ Here is a tiny tip: Keeping a note along the way helped, even though I took a lo
 ![notes](Images/AccessControlLab4_13_notes.png)
 
 ## Mitigations Strategies
+
++ Enforce Proper Access Controls (Authorization Checks)
+  + Implement strict backend-side authorization checks to ensure users can only access their own resources, regardless of user ID in request parameters.
++ Avoid Using User-Controlled Identifiers in URLs
+  + Don't rely on user-supplied IDs (like id=9) to control access. Instead, identify users via session tokens or securely stored user context.
++ Use Indirect Object References (IDOR Prevention)
+  + Replace raw user IDs with opaque, securely mapped tokens (e.g., UUIDs or hashed values) that are hard to guess or reverse-engineer.
++ Implement Role-Based Access Control (RBAC)
+  + Ensure each authenticated user is assigned a role, and access permissions are granted based on roles rather than user IDs.
++ Log and Monitor Access Attempts
+  + Log abnormal access patterns, such as repeated ID enumeration, and alert on suspicious activity.
++ Use Rate Limiting and IP Throttling
+  + Prevent automation of ID guessing by limiting the number of requests from a client or IP.
++ Security Testing (DAST/SAST)
+  + Regularly test applications for IDOR vulnerabilities using automated tools and manual penetration testing.
+  
