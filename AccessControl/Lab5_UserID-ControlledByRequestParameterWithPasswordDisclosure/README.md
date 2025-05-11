@@ -43,11 +43,13 @@ As you can see in the noted below.
 
 ## Important Points
 
++ The root cause of the issue is broken access control, allowing the attacker to directly manipulate the id parameter to access other users' data, including sensitive administrator credentials.
 + The password was shown and stored without salt which was easy to be stolen once I could gain access to the account the way I did. This is dangerous because I didn't even need to change the administor account's password. I was able to copy the password to log in as administrator without even needs to be the admin.
 + There were no 2FA checking if I were the admin or not. This means once I have obtained the password, I could login as the admin, change the admin account's password to prevent the real admin from logging in. Then, I could do any damanges I want within the admin's power such as delete another user, Carlos.
 
 ## Mitigation Strategies
 
++ Implement proper access control to ensure users can only access their own data, regardless of request parameters. This can be done by validating user session data on the server side instead of trusting client-side input like URL parameters.
 + Add 2FA or MFA to check when I login as the administrator account. This means if I could not verify myself through the MFA, the system can assume that I am not the real admin. This will protect the admin account from being logged in by someone who should not be able to do so.
   + This can be another OTP generator app or a one click approval from another device similar to when I logged into Facebook on my computer and the system told me to approve it from my other device that is already logged in.
 + Not only the login needs the authorization either by using 2FA, MFA, or one-click approval, if the admin account perform any actions that can be impactful to the system such as changing the account password or delete a regular user, there should be another one of those authentication check as well. I saw it being implement in Zoho business email the free version.
