@@ -55,3 +55,8 @@ Now I have successfully login as Carlos and solved the lab as shown in the scree
 
 + Avoid Leaking Information via URLs
   + Avoid passing user identifiers (`?id=wiener`) in URLs that control access to user-specific pages.
+
+---
+
+**Author:** Sangsongthong C.
+**Publish Date:** 18 May 2025
