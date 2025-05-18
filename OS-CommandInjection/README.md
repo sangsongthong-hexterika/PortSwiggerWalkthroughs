@@ -10,6 +10,12 @@
 
 ![checkStockOriginalBurp](images/OS-CommandInjection_3_checkStockOriginalBurp.png)
 
+Capture the request on Burp and make changes in the `storeID`'s value by adding `|whoami &` at the end to trick the server to show the result of the `whoami` command. If the server displays the result on the web page, it means the server was vulnerable to OS-Command Injection attack.
+
+Before moving on, it is worth noting that the OS-Command Injection URL ended with `/product/stock` without showing something like `id=something`. This makes it different than the attack that users can modify the URL.
+
+Another point to mention is the vulnerable code is written at the end of the source code as `storeID=number` and the `number` is the only thing that changes once I click on another product, but the change will not show on the URL form.
+
 ![checkStockAddWhoAmI](images/OS-CommandInjection_4_checkStockAddWhoAmI.png)
 
 I have successfully tricked the server to reveal the result of running `whoami` command.
