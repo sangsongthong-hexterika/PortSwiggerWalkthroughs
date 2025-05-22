@@ -2,11 +2,25 @@
 
 **Lab:** Port Swigger Academy
 
+Navigate to the lab URL. Note that the URL with the `productID=number` was not the correct one. Do not confuse it with the other attack vector. I put the first two screenshots here with this explanation so you won't get lost in it.
+
+The below screenshot is the orginal of the incorrect attack vector.
+
 ![originalProductID](images/OS-CommandInjection_1_originalProductID.png)
+
+The below screenshot is the previous screenshot after trying to add `| whoami &" and found that it didn't work.
 
 ![addWhoAmI](images/OS-CommandInjection_2_addWhoAmI.png)
 
+On the product discription page, scroll down to see the choosing the store section. Pick one of them and click "Check Stock".
+
 ![checkStock](images/OS-CommandInjection_3_checkStock.png)
+
+Capture the request on Burp. Take a look at the screenshot below, the box areas highlight the spot to test the OS-Command Injection.
+
+You can see that the URL has to show something like `/product/stock` rather than `/product/stock=1`. If the URL uses `/product/stock=1`, then it can be a different type of attack.
+
+In OS-Command Injection, the command is at the end of the captured request. This is where I want to spend time climbing.
 
 ![checkStockOriginalBurp](images/OS-CommandInjection_3_checkStockOriginalBurp.png)
 
