@@ -6,23 +6,23 @@ I will write about lab 1 and lab 2 together in one file since they are not long.
 
 ## Lab 1: Basic SSRF Against The Local Server
 
-![cannotVisitAdminDirectly](Lab1/SSRFLab1_1_cannotVisitAdminDirectly.png)
+![cannotVisitAdminDirectly](Lab1/SSRFLab2_1_cannotVisitAdminDirectly.png)
 
-![clickProductCheckStock](Lab1/SSRFLab1_2_clickProductCheckStock.png)
+![clickProductCheckStock](Lab1/SSRFLab2_2_clickProductCheckStock.png)
 
-![stockApi](Lab1/SSRFLab1_3_stockApi.png)
+![stockApi](Lab1/SSRFLab2_3_stockApi.png)
 
-![stockApiRepeater](Lab1/SSRFLab1_4_stockApiRepeater.png)
+![stockApiRepeater](Lab1/SSRFLab2_4_stockApiRepeater.png)
 
-![visitLocalHostAdminViaStockApi](Lab1/SSRFLab1_5_visitLocalHostAdminViaStockApi.png)
+![visitLocalHostAdminViaStockApi](Lab1/SSRFLab2_5_visitLocalHostAdminViaStockApi.png)
 
-![deleteCarlosByChangingTheURL-toThis](Lab1/SSRFLab1_6_deleteCarlosByChangingTheURL-toThis.png)
+![deleteCarlosByChangingTheURL-toThis](Lab1/SSRFLab2_6_deleteCarlosByChangingTheURL-toThis.png)
 
-![followTheRedirection](Lab1/SSRFLab1_7_followTheRedirection.png)
+![followTheRedirection](Lab1/SSRFLab2_7_followTheRedirection.png)
 
-![visitLocalHostAdminViaStockApiFromProxyTab](Lab1/Lab1_8_visitLocalHostAdminViaStockApiFromProxyTab.png)
+![visitLocalHostAdminViaStockApiFromProxyTab](Lab1/SSRFLab2_8_visitLocalHostAdminViaStockApiFromProxyTab.png)
 
-![labSolved](Lab1/SSRFLab1_9_labSolved.png)
+![labSolved](Lab1/SSRFLab2_9_labSolved.png)
 
 ## Lab 2: Basic SSRF against another back-end system
 
@@ -52,8 +52,20 @@ The below screenshot shows the `200` result. After getting this result, I sent i
 
 ![PauseAndSendToRepeater](Lab2/SSRFLab2_4_PauseAndSendToRepeater.png)
 
+On the `Repeater` tab, scroll down on the response to see the part of the source code mentioning about deleting the user Carlos.
+
+Add that part to the `stockApi` as shown with the green highlight and hit `Send`.
+
+The idea is to trick the `stockApi` to allow me to access the `/admin` page as well as allowing me to perform an important administrator level task like deleting a user, Carlos, without checking that I have no right to do so.
+
+Note that this part can also be completed in the web browser if I send it to the `Proxy` instead of the `Repeater`.
+
 ![deleteCarlos](Lab2/SSRFLab2_5_deleteCarlos.png)
 
+Follow the direction as shown below since every request is still get captured by `Burp Suite`.
+
 ![followRedirection](Lab2/SSRFLab2_6_followRedirection.png)
+
+I successfully able to delete the user Carlos and solved the lab.
 
 ![labSolved](Lab2/SSRFLab2_7_labSolved.png)
