@@ -53,3 +53,8 @@ The /etc/passwd file contains user account information, such as usernames, user 
 + Avoid dynamic file access if not necessary: If you don’t need user-specified filenames, don't allow them. Use internal mappings or static filenames.
 
 + Use least privilege permissions: The program should only have access to directories and files it really needs, using the principle of least privilege.
+
+---
+
+Author: Sangsongthong C.
+Publishing Date:
