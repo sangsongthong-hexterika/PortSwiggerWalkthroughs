@@ -54,7 +54,35 @@ This one was the result of running the command in the previous screenshot.
 
 ![playAroundResult](images/OS-CommandInjection_zz_playAroundResult.png)
 
+## Mitigation Strategies
+
+To prevent OS Command Injection vulnerabilities like the one exploited in this lab, developers and system administrators should implement the following security measures:
+
++ Avoid Using System Commands
+  + Do not call OS commands from web applications unless absolutely necessary.
+  + Use safer, language-native alternatives (e.g., file system or network libraries) instead of invoking shell commands.
+
++ Use Secure APIs
+  + If system-level calls are unavoidable, use functions that do not invoke a shell (e.g., Pytho's `subprocess.run()` with `shell=False`, or Java's `ProcessBuilder`).
+
++ Validate and Sanitize Input
+  + Strictly validate all user input using allow-lists (e.g., only allow numeric store IDs).
+  + Sanitize inputs to ensure no special characters (like `|`, `&`, `;`, etc.) are passed to command-line calls.
+
++ Use Least Privilege
+  + Run the web server and backend processes with the least privileges necessary to limit potential damage if exploited.
+
++ Apply Output Encoding
+  + Encode user-controlled outputs displayed on the web interface to avoid other forms of injection attacks like XSS, which may aid chaining with command injection.
+
++ Web Application Firewall (WAF)
+  + Deploy a WAF that can help detect and block basic injection patterns at the network edge.
+
++ Security Testing and Code Reviews
+  + Conduct regular penetration testing, especially on endpoints accepting user input.
+  + Include static analysis and secure code reviews as part of the development lifecycle.
+
 ---
 
 **Author:** Sangsongthong C.
-**Publish Date:**
+**Publish Date:** 29 May 2025
