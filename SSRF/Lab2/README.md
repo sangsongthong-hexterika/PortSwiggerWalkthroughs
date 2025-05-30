@@ -1,8 +1,6 @@
-# Lab: Server Side Request Forgery: (SSRF)
+# Lab 2: Basic SSRF against another back-end system
 
-## Lab 2: Basic SSRF against another back-end system
-
-### Port Swigger Academy
+## Port Swigger Academy
 
 Starting off by navigating to the lab URL. Then, navigate to one of the product page. Once you are there, scroll down until you see the `Check stock` button as shown in the below screenshot.
 
@@ -48,9 +46,41 @@ I successfully able to delete the user Carlos and solved the lab.
 
 ![labSolved](images/SSRFLab2_7_labSolved.png)
 
-## Mitigation Strategies
+## 🔐 Mitigation Strategies
+
++ Input Validation & Whitelisting
+  + Only allow URLs to trusted internal services.
+  + Use strict allowlists for permitted hostnames/IPs.
+  + Block direct IP access, especially internal IP ranges (127.0.0.1, 169.254.169.254, 192.168.x.x, etc.).
+
++ Disable Unnecessary URL Fetching
+  + If external or internal URLs don't need to be accessed by the server, disable this functionality altogether.
+
++ Use DNS Resolution Controls
+  + Block DNS rebinding by resolving hostnames only once and caching the IP.
+  + Avoid allowing redirects to user-controlled domains.
+
++ Implement Network Segmentation
+  + Isolate internal services from the web application.
+  + Prevent the web app from accessing internal-only admin endpoints.
+
++ Response Filtering
+  + Remove sensitive information (e.g., error messages or internal data) from server responses.
+  + Avoid exposing full response bodies from internal requests to the user.
+
++ Limit Request Metadata
+  + Strip or control `headers` like `Host`, `User-Agent`, etc., on internal requests.
+  + Use backend tokens to authenticate inter-service calls, preventing forged requests.
+
++ Set Timeouts and Limitations
+  + Restrict request timeouts and payload size to prevent abuse.
+
++ Logging and Monitoring
+  + Monitor outbound traffic from the application for anomalies.
+  + Log all server-side requests triggered by user input.
+  + Use anomaly detection to spot SSRF-like behavior (e.g., repeated IP scanning).
 
 ---
 
-Author: Sangsongthong C.
-Publishing Date:
+**Author:** Sangsongthong C.  
+**Publishing Date:** 30 May 2025
